@@ -50,7 +50,7 @@ class AddStoryPromptViewController: UIViewController, UITextFieldDelegate{
         }
     }
     
-    func updateStoryPrompt(){
+    @objc  func updateStoryPrompt(){
         storyPrompt.noun = nounTextField.text ?? ""
         storyPrompt.adjective = adjectiveTextField.text ?? ""
         storyPrompt.verb = verbTextField.text ?? ""
@@ -62,10 +62,13 @@ class AddStoryPromptViewController: UIViewController, UITextFieldDelegate{
         verbTextField.text = ""
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     
     func textFieldShouldReturn(_  textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        updateStoryPrompt()
         return true
     }
     
@@ -86,6 +89,7 @@ class AddStoryPromptViewController: UIViewController, UITextFieldDelegate{
                 return
             }
             storyPromptViewController.storyPrompt = storyPrompt
+            storyPromptViewController.isNewStoryPrompt = true
             
         }
     }
@@ -108,7 +112,7 @@ class AddStoryPromptViewController: UIViewController, UITextFieldDelegate{
         storyPromptImageView.isUserInteractionEnabled = true
             let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(changeImage))
             storyPromptImageView.addGestureRecognizer(gestureRecognizer)
-    
+        NotificationCenter.default.addObserver(self, selector: #selector(updateStoryPrompt), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
 }
 extension AddStoryPromptViewController: PHPickerViewControllerDelegate {

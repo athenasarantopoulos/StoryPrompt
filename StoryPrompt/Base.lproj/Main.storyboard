@@ -182,27 +182,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="OAu-SC-eeA">
-                                <rect key="frame" x="150.5" y="832" width="113" height="30"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yyX-TJ-GqQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="53" height="30"/>
-                                        <color key="tintColor" systemColor="labelColor"/>
-                                        <state key="normal" title="Discard"/>
-                                        <connections>
-                                            <action selector="cancelStoryPrompt:" destination="xDF-Ts-9rN" eventType="touchUpInside" id="sMJ-8r-onX"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2kD-QS-lz5">
-                                        <rect key="frame" x="79" y="0.0" width="34" height="30"/>
-                                        <color key="tintColor" systemColor="labelColor"/>
-                                        <state key="normal" title="Save"/>
-                                        <connections>
-                                            <segue destination="FU8-rU-isD" kind="unwind" unwindAction="saveStoryPromptWithUnwindSegue:" id="Chb-Lu-dBN"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sqa-6U-wcT"/>
                         <color key="backgroundColor" red="0.0" green="0.89411764709999997" blue="0.59215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -212,14 +191,13 @@
                             <constraint firstItem="KRJ-mG-QYg" firstAttribute="width" secondItem="dsU-iW-X3G" secondAttribute="width" id="G1R-77-Z0f"/>
                             <constraint firstItem="KRJ-mG-QYg" firstAttribute="centerX" secondItem="dsU-iW-X3G" secondAttribute="centerX" id="bmV-lo-05A"/>
                             <constraint firstItem="gAT-Mi-ZDh" firstAttribute="centerX" secondItem="KRJ-mG-QYg" secondAttribute="centerX" id="dyj-LL-aqB"/>
-                            <constraint firstItem="OAu-SC-eeA" firstAttribute="centerX" secondItem="dsU-iW-X3G" secondAttribute="centerX" id="hIc-8l-8Xk"/>
-                            <constraint firstItem="OAu-SC-eeA" firstAttribute="bottom" secondItem="sqa-6U-wcT" secondAttribute="bottom" id="tXw-Ca-hcD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vKR-Uh-iZ3"/>
                     <connections>
                         <outlet property="storyPromptTextField" destination="gAT-Mi-ZDh" id="DHi-j6-NCq"/>
                         <segue destination="FU8-rU-isD" kind="unwind" identifier="CancelStoryPrompt" unwindAction="cancelStoryPromptWithUnwindSegue:" id="r1h-Tq-7d3"/>
+                        <segue destination="FU8-rU-isD" kind="unwind" identifier="SaveStoryPrompt" unwindAction="saveStoryPromptWithUnwindSegue:" id="5hF-4q-nuC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dxj-R7-nio" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

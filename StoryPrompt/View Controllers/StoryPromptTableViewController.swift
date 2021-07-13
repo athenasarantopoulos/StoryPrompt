@@ -11,8 +11,13 @@ class StoryPromptTableViewController: UITableViewController {
 
     var storyPrompts = [StoryPromptEntry]()
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateStoryPromptList(notification:)), name: .StoryPromptSaved, object: nil)
 
 //        let storyPromp1 = StoryPromptEntry()
 //        let storyPromp2 = StoryPromptEntry()
@@ -74,16 +79,26 @@ class StoryPromptTableViewController: UITableViewController {
       }
 
     @IBAction func saveStoryPrompt(unwindSegue: UIStoryboardSegue) {
-        guard let storyPromptViewController = unwindSegue.source as? StoryPromptViewController,
-              let storyPrompt = storyPromptViewController.storyPrompt else {
-          return
-        }
-        storyPrompts.append(storyPrompt)
-        tableView.reloadData()
+//        guard let storyPromptViewController = unwindSegue.source as? StoryPromptViewController,
+//              let storyPrompt = storyPromptViewController.storyPrompt else {
+//          return
+//        }
+//        storyPrompts.append(storyPrompt)
+//        tableView.reloadData()
     }
     
     @IBAction func cancelStoryPrompt(unwindSegue: UIStoryboardSegue){
         
+    }
+
+    // é possivel salvar na lista usando unwind segue ou notification
+    @objc func updateStoryPromptList(notification: Notification){
+        guard let storyPrompt = notification.object as? StoryPromptEntry else {
+            return
+        }
+        storyPrompts.append(storyPrompt)
+        tableView.reloadData()
+
     }
 
 }
