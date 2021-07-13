@@ -126,7 +126,7 @@
                                         <color key="tintColor" systemColor="labelColor"/>
                                         <state key="normal" title="Generate Story Prompt"/>
                                         <connections>
-                                            <segue destination="xDF-Ts-9rN" kind="show" id="72Z-eT-XpD"/>
+                                            <action selector="generateStoryPrompt:" destination="BYZ-38-t0r" eventType="touchUpInside" id="05P-um-8cc"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -150,6 +150,7 @@
                         <outlet property="numberSlider" destination="MuL-eM-cVX" id="qwO-jV-QYw"/>
                         <outlet property="storyPromptImageView" destination="Uwz-Eg-8Sq" id="fn2-wU-hnK"/>
                         <outlet property="verbTextField" destination="KX8-LZ-hxj" id="aBL-Gi-PFL"/>
+                        <segue destination="xDF-Ts-9rN" kind="show" identifier="StoryPrompt" id="yKM-ja-OEf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -181,6 +182,27 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="OAu-SC-eeA">
+                                <rect key="frame" x="150.5" y="832" width="113" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yyX-TJ-GqQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="53" height="30"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" title="Discard"/>
+                                        <connections>
+                                            <action selector="cancelStoryPrompt:" destination="xDF-Ts-9rN" eventType="touchUpInside" id="sMJ-8r-onX"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2kD-QS-lz5">
+                                        <rect key="frame" x="79" y="0.0" width="34" height="30"/>
+                                        <color key="tintColor" systemColor="labelColor"/>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <segue destination="FU8-rU-isD" kind="unwind" unwindAction="saveStoryPromptWithUnwindSegue:" id="Chb-Lu-dBN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sqa-6U-wcT"/>
                         <color key="backgroundColor" red="0.0" green="0.89411764709999997" blue="0.59215686270000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -190,16 +212,67 @@
                             <constraint firstItem="KRJ-mG-QYg" firstAttribute="width" secondItem="dsU-iW-X3G" secondAttribute="width" id="G1R-77-Z0f"/>
                             <constraint firstItem="KRJ-mG-QYg" firstAttribute="centerX" secondItem="dsU-iW-X3G" secondAttribute="centerX" id="bmV-lo-05A"/>
                             <constraint firstItem="gAT-Mi-ZDh" firstAttribute="centerX" secondItem="KRJ-mG-QYg" secondAttribute="centerX" id="dyj-LL-aqB"/>
+                            <constraint firstItem="OAu-SC-eeA" firstAttribute="centerX" secondItem="dsU-iW-X3G" secondAttribute="centerX" id="hIc-8l-8Xk"/>
+                            <constraint firstItem="OAu-SC-eeA" firstAttribute="bottom" secondItem="sqa-6U-wcT" secondAttribute="bottom" id="tXw-Ca-hcD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vKR-Uh-iZ3"/>
                     <connections>
                         <outlet property="storyPromptTextField" destination="gAT-Mi-ZDh" id="DHi-j6-NCq"/>
+                        <segue destination="FU8-rU-isD" kind="unwind" identifier="CancelStoryPrompt" unwindAction="cancelStoryPromptWithUnwindSegue:" id="r1h-Tq-7d3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dxj-R7-nio" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="FU8-rU-isD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1566.6666666666667" y="122.54464285714285"/>
+        </scene>
+        <!--Story Prompt Table View Controller-->
+        <scene sceneID="G2M-II-KE4">
+            <objects>
+                <tableViewController id="9Nw-Uh-7oU" customClass="StoryPromptTableViewController" customModule="StoryPrompt" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="TDe-gz-lXv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoryPromptCell" textLabel="rhe-2d-XSi" style="IBUITableViewCellStyleDefault" id="Fq8-hL-YWB">
+                                <rect key="frame" x="0.0" y="24.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Fq8-hL-YWB" id="6vB-GU-DNd">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rhe-2d-XSi">
+                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="9Nw-Uh-7oU" id="7H4-iQ-X8M"/>
+                            <outlet property="delegate" destination="9Nw-Uh-7oU" id="2Kl-n8-b2F"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="4HO-z9-PgS">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3Sz-7g-rjH">
+                            <connections>
+                                <segue destination="BYZ-38-t0r" kind="show" id="p5X-cW-MBF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="xDF-Ts-9rN" kind="show" identifier="ShowStoryPrompt" id="IvB-ox-gGH"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wZt-4L-Ew1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="871" y="810"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="FZj-RA-Pff">
@@ -212,7 +285,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="0yY-ho-yfK"/>
+                        <segue destination="9Nw-Uh-7oU" kind="relationship" relationship="rootViewController" id="hyR-nH-lbJ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Env-vz-Onv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -220,6 +293,9 @@
             <point key="canvasLocation" x="-17.39130434782609" y="115.84821428571428"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="yKM-ja-OEf"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="10.circle" catalog="system" width="128" height="121"/>
         <image name="5.circle" catalog="system" width="128" height="121"/>
@@ -227,6 +303,9 @@
         <image name="object-object_box-of-books" width="1000" height="1000"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

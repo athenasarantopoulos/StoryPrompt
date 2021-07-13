@@ -28,7 +28,8 @@ class AddStoryPromptViewController: UIViewController, UITextFieldDelegate{
     @IBAction func generateStoryPrompt(_ sender: Any) {
         updateStoryPrompt()
         if storyPrompt.isValid(){
-            print(storyPrompt)
+// utilizado quando é view controller para view controller
+            performSegue(withIdentifier: "StoryPrompt", sender: nil)
         }else{
             let alert = UIAlertController(title: "Invalid Story Prompt", message: "Please fill out all of the fields", preferredStyle: .alert)
                   let action = UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -76,16 +77,27 @@ class AddStoryPromptViewController: UIViewController, UITextFieldDelegate{
         controller.delegate = self
         present(controller, animated: true)
       }
+    
+    
+    // utilizado quando é ação de algum outlet
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "StoryPrompt" {
+            guard let storyPromptViewController = segue.destination as? StoryPromptViewController else {
+                return
+            }
+            storyPromptViewController.storyPrompt = storyPrompt
+            
+        }
+    }
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
+        // utilizado quando é ação button
+//        storyPrompt.noun = "toaster"
+//        storyPrompt.adjective = "smelly"
+//        storyPrompt.verb = "burps"
         numberSlider.value = 7.5
-        storyPrompt.noun = "toaster"
-        storyPrompt.adjective = "smelly"
-        storyPrompt.verb = "burps"
         storyPrompt.number = Int(numberSlider.value)
         //print(storyPrompt)
         
